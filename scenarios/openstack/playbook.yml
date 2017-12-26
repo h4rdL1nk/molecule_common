@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
   roles:
-    - role: "{{lookup('env', 'JOB_NAME')}}"
+    - role: "{{lookup('env', 'ROLE_NAME')}}"
