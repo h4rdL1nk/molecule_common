@@ -10,7 +10,7 @@
     molecule_instance_config: "{{ lookup('env', 'MOLECULE_INSTANCE_CONFIG') }}"
     molecule_yml: "{{ lookup('file', molecule_file) | molecule_from_yaml }}"
 
-    ssh_user: cloud-user
+    ssh_user: "{{ molecule_yml['platforms'][0]['sshuser']}}"
     ssh_port: 22
 
     security_group_name: molecule
@@ -27,7 +27,7 @@
       - ethertype: IPv6
         group: "{{ security_group.id }}"
 
-    neutron_network_name: ONM_VMS
+    neutron_network_name: "{{ molecule_yml['platforms'][0]['network']}}"
 
     keypair_name: molecule_key
     keypair_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh_key"
