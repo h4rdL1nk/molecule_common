@@ -41,7 +41,8 @@
     - name: Gather facts about network for use with instance creation
       os_networks_facts:
         validate_certs: False
-        name: "{{ neutron_network_name }}"
+        name: "{{ molecule_yml['platforms'][0]['network']}}"
+        #name: "{{ neutron_network_name }}"
 
     - name: Create volumes
       include: create_volumes.yml action=present instance_volumes={{item.volumes}} 
