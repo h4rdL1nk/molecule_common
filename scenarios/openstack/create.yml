@@ -35,8 +35,8 @@
     nova_image: Ubuntu-16.04
     nova_flavor: NO-Nano
   tasks:
-    - include: security_group.yml
-    - include: keypair.yml
+    - include_tasks: security_group.yml
+    - include_tasks: keypair.yml
 
     - name: Gather facts about network for use with instance creation
       os_networks_facts:
@@ -45,7 +45,7 @@
         #name: "{{ neutron_network_name }}"
 
     - name: Create volumes
-      include: create_volumes.yml action=present instance_volumes={{item.volumes}} 
+      include_tasks: create_volumes.yml action=present instance_volumes={{item.volumes}} 
       with_items: "{{ molecule_yml.platforms }}"
 
     - name: Create molecule instance(s)
@@ -73,7 +73,7 @@
       with_items: "{{ server.results }}"
 
     - name: Attach volumes
-      include: attach_volumes.yml action=present instance_name={{ item.name }} instance_volumes={{item.volumes}}
+      include_tasks: attach_volumes.yml action=present instance_name={{ item.name }} instance_volumes={{item.volumes}}
       with_items: "{{ molecule_yml.platforms }}"
 
     # Mandatory configuration for Molecule to function.
