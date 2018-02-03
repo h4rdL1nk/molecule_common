@@ -57,7 +57,7 @@
         key_name: "{{ keypair_name }}"
         auto_ip: no
         nics:
-          - "{{ item.network }}"
+          - net-id: "{{ item.network }}"
           #- net-id: "{{ openstack_networks[0]['id'] }}"
       register: server
       with_items: "{{ molecule_yml.platforms }}"
