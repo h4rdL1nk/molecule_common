@@ -82,6 +82,9 @@
       set_fact:
         instance_conf_dict: {
           'instance': "{{ item.openstack.name }}",
+          # This variable gets the SSH connection IP from server facts
+          #'address': "{{ item.openstack.private_v4 }}",
+          'address': "{{ item['openstack']['addresses'][molecule_yml['platforms'][0]['network']]['addr'] }}", 
           'address': "{{ item.openstack.private_v4 }}",
           'user': "{{ ssh_user }}",
           'port': "{{ ssh_port }}",
