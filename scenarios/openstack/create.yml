@@ -29,7 +29,8 @@
 
     neutron_network_name: "{{ molecule_yml['platforms'][0]['network']}}"
 
-    keypair_name: molecule_key
+    #keypair_name: molecule_key
+    keypair_name: "keypair-{{ molecule_yml['platforms'][0]['name'] }}"
     keypair_path: "{{ lookup('env', 'MOLECULE_EPHEMERAL_DIRECTORY') }}/ssh_key"
 
     nova_image: Ubuntu-16.04
