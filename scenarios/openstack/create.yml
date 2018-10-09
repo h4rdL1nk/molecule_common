@@ -42,11 +42,14 @@
     - name: Gather facts about network for use with instance creation
       os_networks_facts:
         validate_certs: False
-        name: "{{ molecule_yml['platforms'][0]['network']}}"
+        name: "{{ molecule_yml['platforms'][0]['network'] }}"
         #name: "{{ neutron_network_name }}"
 
     - name: Create volumes
-      include_tasks: create_volumes.yml action=present instance_volumes={{item.volumes}} 
+      include_tasks: create_volumes.yml 
+        vars: 
+          action: present 
+          instance_volumes: "{{item.volumes}}" 
       with_items: "{{ molecule_yml.platforms }}"
 
     - name: Create molecule instance(s)
@@ -74,7 +77,11 @@
       with_items: "{{ server.results }}"
 
     - name: Attach volumes
-      include_tasks: attach_volumes.yml action=present instance_name={{ item.name }} instance_volumes={{item.volumes}}
+      include_tasks: attach_volumes.yml 
+      vars:
+        action: present 
+        instance_name: "{{ item.name }}"
+        instance_volumes: "{{ item.volumes }}"
       with_items: "{{ molecule_yml.platforms }}"
 
     # Mandatory configuration for Molecule to function.
@@ -85,8 +92,7 @@
           'instance': "{{ item.openstack.name }}",
           # This variable gets the SSH connection IP from server facts
           #'address': "{{ item.openstack.private_v4 }}",
-          'address': "{{ item['openstack']['addresses'][molecule_yml['platforms'][0]['network']]['addr'] }}", 
-          'address': "{{ item.openstack.private_v4 }}",
+          'address': "{{ item['openstack']['addresses'][molecule_yml['platforms'][0]['network']][0]['addr'] }}",
           'user': "{{ ssh_user }}",
           'port': "{{ ssh_port }}",
           'identity_file': "{{ keypair_path }}", }
