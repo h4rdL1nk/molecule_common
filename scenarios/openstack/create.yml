@@ -47,9 +47,9 @@
 
     - name: Create volumes
       include_tasks: create_volumes.yml 
-        vars: 
-          action: present 
-          instance_volumes: "{{item.volumes}}" 
+      vars: 
+        action: present 
+        instance_volumes: "{{item.volumes}}" 
       with_items: "{{ molecule_yml.platforms }}"
 
     - name: Create molecule instance(s)

@@ -13,10 +13,10 @@
 
     - name: Detach volumes
       include_tasks: attach_volumes.yml 
-        vars:
-          action: absent 
-          instance_name: "{{ item.name }}" 
-          instance_volumes: "{{ item.volumes }}"
+      vars:
+        action: absent 
+        instance_name: "{{ item.name }}" 
+        instance_volumes: "{{ item.volumes }}"
       with_items: "{{ molecule_yml.platforms }}"
 
     - name: Destroy molecule instance(s)
@@ -39,9 +39,9 @@
 
     - name: Destroy volumes
       include_tasks: create_volumes.yml 
-        vars:
-          action: absent 
-          instance_volumes: "{{item.volumes}}" 
+      vars:
+        action: absent 
+        instance_volumes: "{{item.volumes}}" 
       with_items: "{{ molecule_yml.platforms }}"
 
     # Mandatory configuration for Molecule to function.
